@@ -1,0 +1,41 @@
+﻿@{
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+@model WeatherModel
+
+<div class="container border border-gray rounded p-5 shadow">
+    <h2><i class="bi bi-gear me-2 pb-5" style="font-size: 25px"></i>Weather Details</h2>
+    <hr />
+
+    <form class="pt-3" method="post" asp-area="Admin" asp-controller="AdminWeather" asp-action="InsertUpdateWeather">
+
+        <div class="col my-4">
+            <input type="text" class="form-control" asp-for="WeatherTemperature" placeholder="Weather Temperature" aria-label="Weather Temperature">
+            <span asp-validation-for="WeatherTemperature" class="text-danger"></span>
+        </div>
+
+        <div class="col my-4">
+            <input type="date" class="form-control" asp-for="Date" placeholder="Date" aria-label="Date">
+            <span asp-validation-for="Date" class="text-danger"></span>
+        </div>
+
+        <div class="col my-4">
+            <select class="form-control" asp-for="CityID" asp-items="@(new SelectList(ViewBag.CityList2, "CityID", "CityName", Model.CityID))">
+                <option value="">Select City</option>
+            </select>
+            <span asp-validation-for="CityID" class="text-danger"></span>
+        </div>
+
+        <div class="col mt-4">
+            <input type="hidden" name="WeatherID" id="WeatherID" value="@Model.WeatherID" />
+            <button class="btn btn-primary" type="submit">Submit</button>
+            <form asp-area="Admin" asp-controller="AdminWeather" asp-action="WeatherList">
+                <div class="col mt-4">
+                    <button class="btn btn-secondary" type="submit">Back</button>
+                </div>
+            </form>
+        </div>
+    </form>
+</div>
+

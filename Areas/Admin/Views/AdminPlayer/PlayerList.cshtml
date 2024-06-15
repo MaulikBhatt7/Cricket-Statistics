@@ -1,0 +1,156 @@
+﻿@{
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+@using System.Data;
+@model DataTable;
+<style>
+
+    .line {
+        width: 50%;
+        height: 1px;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .alert-container {
+        width: 100%;
+        height: 70px;
+    }
+
+</style>
+
+
+
+<div class="pagetitle my-4 mx-2">
+    <h1>Dashboard</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item active">PlayerList</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+
+<div class="border rounded p-5 shadow">
+
+    <div class="d-flex justify-content-between align-items-center">
+
+        <h5 class="fw-bold"><i class="bi bi-gear me-2" style="font-size: 20px"></i>Players List</h5>
+        <a asp-area="Admin" asp-controller="AdminPlayer" asp-action="PlayerAddEdit">
+            <button class="btn bg-success text-white py-2"><i class="bi bi-plus-circle me-2"></i>ADD Player</button>
+        </a>
+
+    </div>
+
+    <hr />
+
+
+
+    @*<input type="text" placeholder="Search here" class="border border-dark d-block rounded ps-3 pe-5 py-2 ms-auto my-3" />*@
+
+    <form asp-area="Admin" asp-controller="AnimalType">
+        <div class="row">
+            <div class="w-25 my-3">
+                <label class="visually-hidden" for="autoSizingInputGroup">Player Name</label>
+                <div class="input-group">
+                    <div class="input-group-text bg-transparent" style="font-size: 15px"><i class="bi bi-search"></i></div>
+                    <input type="text" class="form-control" id="PlayerName" name="PlayerName" placeholder="Player Name">
+                    @*<input type="hidden" name="CountryCode" value="CountryCode" />*@
+                </div>
+            </div>
+
+            <div class="w-auto my-3">
+                <div class="input-group">
+                    <input type="submit" asp-action="FilterByName" class="btn border border-primary text-primary" id="" value="Apply Filter" placeholder="Player Name">
+                </div>
+            </div>
+
+            <div class="w-auto my-3">
+                <div class="input-group">
+                    <input type="submit" asp-action="PlayerList" class="btn border border-secondary text-secondary" id="" value="Clear Filter" placeholder="Animal Name">
+                </div>
+            </div>
+
+        </div>
+    </form>
+
+    <div class="line ms-auto my-3"></div>
+
+    <div>
+        <div class="w-25 ms-auto my-3 col">
+            <p class="text-secondary">
+                <span class="ms-1 me-2">&#x2022</span> Search With JQuery
+            </p>
+            <label class="visually-hidden" for="autoSizingInputGroup">Username</label>
+            <div class="input-group">
+                <div class="input-group-text bg-transparent" style="font-size: 15px"><i class="bi bi-search"></i></div>
+                <input type="text" class="form-control" placeholder="Search here">
+            </div>
+        </div>
+
+    </div>
+
+    <div>
+
+        <table class="table table-striped table-bordered table-responsive">
+            <thead>
+                <tr>
+                    @*<th scope="col">CountryId</th>*@
+                    <th scope="col" class="text-center">Player Image</th>
+                    <th scope="col" class="text-center">Player Name</th>
+                    <th scope="col" class="text-center">Birth Date</th>
+                    <th scope="col" class="text-center">Age</th>
+                    <th scope="col" class="text-center">Batting Style</th>
+                    <th scope="col" class="text-center">Bowling Style</th>
+                    <th scope="col" class="text-center">Role</th>
+                    <th scope="col" class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody id="sample_2">
+
+                @foreach (DataRow dr in Model.Rows)
+                {
+
+                    <tr>
+                        @*<td class="text-center">@dr["CountryID"]</td>*@
+                        <td class="text-center"><img style="width: 50px; height: 50px;" src="@dr["PlayerImage"]" alt="Player Image" class="img-fluid" style="max-width: 100px; max-height: 100px;" /></td>
+                        <td class="text-center">@dr["PlayerName"]</td>
+                        <td class="text-center">@Convert.ToDateTime(@dr["BirthDate"].ToString()).ToString("d")</td>
+                        <td class="text-center">@int.Parse(dr["Age"].ToString())</td>
+                        <td class="text-center">@dr["BattingStyle"]</td>
+                        <td class="text-center">@dr["BowlingStyle"]</td>
+                        <td class="text-center">@dr["Role"]</td>
+                        <td class="text-center d-flex">
+                            <form method="post" asp-area="Admin" asp-controller="AdminPlayer" asp-action="PlayerAddEdit">
+                                <input type="hidden" name="PlayerID" id="PlayerID" value="@Convert.ToInt32(dr["PlayerID"])" />
+                                <button type="submit" style="height: 50px; width: 50px;" class="btn border border-primary py-1 me-2"><i class="bi bi-pen text-primary" style="font-size: 14px"></i></button>
+                            </form>
+                            <form method="post" asp-area="Admin" asp-controller="AdminPlayer" asp-action="DeletePlayer">
+                                <input type="hidden" name="PlayerID" id="PlayerID" value="@Convert.ToInt32(dr["PlayerID"])" />
+                                <button type="submit" style="height: 50px; width: 50px;" class="btn border border-danger py-1" onclick="return fun1()"><i class="bi bi-trash text-danger" style="font-size: 14px"></i></button>
+                            </form>
+
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+
+    </div>
+
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+
+            $("#sample_1").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#sample_2 tr").filter(function () {
+
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+}

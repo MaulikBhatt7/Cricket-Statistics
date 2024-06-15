@@ -1,0 +1,111 @@
+﻿@{
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+@model PlayerWiseBowlingStatisticsModel
+
+<div class="container border border-gray rounded p-5 shadow">
+    <h2><i class="bi bi-gear me-2 pb-5" style="font-size: 25px"></i>Player Bowling Statistics</h2>
+    <hr />
+
+    <form class="pt-3" method="post" asp-area="Admin" asp-controller="AdminPlayerWiseBowlingStatistics" asp-action="InsertUpdateBowlingStatistics">
+
+        <div class="col my-4">
+            
+            <input type="hidden" class="form-control" asp-for="BowlStatID" />
+        </div>
+
+        <div class="col my-4">
+            <label for="PlayerID">Select Player</label>
+            <select class="form-control" asp-for="PlayerID" asp-items="@(new SelectList(ViewBag.PlayerList2, "PlayerID", "PlayerName", Model.PlayerID))">
+                <option value="">Select Player</option>
+            </select>
+            <span asp-validation-for="PlayerID" class="text-danger"></span>
+        </div>
+
+        <div class="col my-4">
+            <label for="FormatID">Select Format</label>
+            <select class="form-control" asp-for="FormatID" asp-items="@(new SelectList(ViewBag.FormatList2, "FormatID", "FormatName", Model.FormatID))">
+                <option value="">Select Format</option>
+            </select>
+            <span asp-validation-for="FormatID" class="text-danger"></span>
+        </div>
+
+        <div class="col my-4">
+            <label for="Matches">Matches</label>
+            <input type="number" class="form-control" asp-for="Matches" placeholder="Matches" aria-label="Matches">
+            <span asp-validation-for="Matches" class="text-danger"></span>
+        </div>
+
+        <div class="col my-4">
+            <label for="Innings">Innings</label>
+            <input type="number" class="form-control" asp-for="Innings" placeholder="Innings" aria-label="Innings">
+            <span asp-validation-for="Innings" class="text-danger"></span>
+        </div>
+
+        <div class="col my-4">
+            <label for="Balls">Balls</label>
+            <input type="number" class="form-control" asp-for="Balls" placeholder="Balls" aria-label="Balls">
+            <span asp-validation-for="Balls" class="text-danger"></span>
+        </div>
+
+        <div class="col my-4">
+            <label for="Runs">Runs</label>
+            <input type="number" class="form-control" asp-for="Runs" placeholder="Runs" aria-label="Runs">
+            <span asp-validation-for="Runs" class="text-danger"></span>
+        </div>
+
+        <div class="col my-4">
+            <label for="Wickets">Wickets</label>
+            <input type="number" class="form-control" asp-for="Wickets" placeholder="Wickets" aria-label="Wickets">
+            <span asp-validation-for="Wickets" class="text-danger"></span>
+        </div>
+
+        <div class="col my-4">
+            <label for="BBI">Best Bowling Innings</label>
+            <input type="text" class="form-control" asp-for="BBI" placeholder="Best Bowling Innings" aria-label="Best Bowling Innings">
+            <span asp-validation-for="BBI" class="text-danger"></span>
+        </div>
+
+        <div class="col my-4">
+            <label for="BBM">Best Bowling Match</label>
+            <input type="text" class="form-control" asp-for="BBM" placeholder="Best Bowling Match" aria-label="Best Bowling Match">
+            <span asp-validation-for="BBM" class="text-danger"></span>
+        </div>
+
+        <div class="col my-4">
+            <label for="Economy">Economy</label>
+            <input type="decimal" class="form-control" asp-for="Economy" placeholder="Economy" aria-label="Economy">
+            <span asp-validation-for="Economy" class="text-danger"></span>
+        </div>
+
+        <div class="col my-4">
+            <label for="Average">Average</label>
+            <input type="decimal" class="form-control" asp-for="Average" placeholder="Average" aria-label="Average">
+            <span asp-validation-for="Average" class="text-danger"></span>
+        </div>
+
+        <div class="col my-4">
+            <label for="StrikeRate">Strike Rate</label>
+            <input type="decimal" class="form-control" asp-for="StrikeRate" placeholder="Strike Rate" aria-label="Strike Rate">
+            <span asp-validation-for="StrikeRate" class="text-danger"></span>
+        </div>
+
+        <div class="col my-4">
+            <label for="FiveW">Five Wickets</label>
+            <input type="number" class="form-control" asp-for="FiveW" placeholder="Five Wickets" aria-label="Five Wickets">
+            <span asp-validation-for="FiveW" class="text-danger"></span>
+        </div>
+
+        <div class="col my-4">
+            <label for="TenW">Ten Wickets</label>
+            <input type="number" class="form-control" asp-for="TenW" placeholder="Ten Wickets" aria-label="Ten Wickets">
+            <span asp-validation-for="TenW" class="text-danger"></span>
+        </div>
+
+        <div class="col mt-4">
+            <button class="btn btn-primary" type="submit">Submit</button>
+            <a asp-area="Admin" asp-controller="AdminPlayerWiseBowlingStatistics" asp-action="PlayerWiseBowlingStatisticsList" class="btn btn-secondary">Back</a>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,112 @@
+﻿@{
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+@using System.Data
+@model DataTable
+
+<style>
+    .line {
+        width: 50%;
+        height: 1px;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .alert-container {
+        width: 100%;
+        height: 70px;
+    }
+</style>
+
+<div class="pagetitle my-4 mx-2">
+    <h1>Dashboard</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item active">Weather List</li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+
+<div class="border rounded p-5 shadow">
+    <div class="d-flex justify-content-between align-items-center">
+        <h5 class="fw-bold"><i class="bi bi-gear me-2" style="font-size: 20px"></i>Weather List</h5>
+        <a asp-area="Admin" asp-controller="AdminWeather" asp-action="WeatherAddEdit">
+            <button class="btn bg-success text-white py-2"><i class="bi bi-plus-circle me-2"></i>ADD Weather</button>
+        </a>
+    </div>
+
+    <hr />
+
+    <form asp-area="Admin" asp-controller="Weather">
+        <div class="row">
+            <!-- Add your filter controls here -->
+        </div>
+    </form>
+
+    <div class="line ms-auto my-3"></div>
+
+    <div>
+        <div class="w-25 ms-auto my-3 col">
+            <p class="text-secondary">
+                <span class="ms-1 me-2">&#x2022</span> Search With JQuery
+            </p>
+            <label class="visually-hidden" for="autoSizingInputGroup">City</label>
+            <div class="input-group">
+                <div class="input-group-text bg-transparent" style="font-size: 15px"><i class="bi bi-search"></i></div>
+                <input type="text" class="form-control" id="myInput" placeholder="Search here">
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <table class="table table-striped table-bordered table-responsive">
+            <thead>
+                <tr>
+                    <th scope="col" class="text-center">Weather ID</th>
+                    <th scope="col" class="text-center">Temperature</th>
+                    <th scope="col" class="text-center">Date</th>
+                    <th scope="col" class="text-center">City ID</th>
+                    <th scope="col" class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody id="sample_2">
+                @foreach (DataRow dr in Model.Rows)
+                {
+                    <tr>
+                        <td class="text-center">@dr["WeatherID"]</td>
+                        <td class="text-center">@dr["WeatherTemperature"]</td>
+                        <td class="text-center">@Convert.ToDateTime(dr["Date"]).ToString("d")</td>
+                        <td class="text-center">@dr["CityID"]</td>
+                        <td class="text-center d-flex justify-content-center align-items-center">
+                            <form method="post" asp-area="Admin" asp-controller="AdminWeather" asp-action="WeatherAddEdit">
+                                <input type="hidden" name="WeatherID" id="WeatherID" value="@Convert.ToInt32(dr["WeatherID"])" />
+                                <button type="submit" class="btn border border-primary py-1 me-2"><i class="bi bi-pen text-primary" style="font-size: 14px"></i></button>
+                            </form>
+                            <form method="post" asp-area="Admin" asp-controller="AdminWeather" asp-action="DeleteWeather">
+                                <input type="hidden" name="WeatherID" id="WeatherID" value="@Convert.ToInt32(dr["WeatherID"])" />
+                                <button type="submit" class="btn border border-danger py-1" onclick="return fun1()"><i class="bi bi-trash text-danger" style="font-size: 14px"></i></button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+
+            $("#sample_1").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#sample_2 tr").filter(function () {
+
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+}

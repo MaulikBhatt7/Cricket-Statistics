@@ -1,0 +1,218 @@
+﻿@{
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+@using System.Data;
+@using cricket_statistics.Areas
+@model DataTable;
+@{
+
+    ScheduleFilterModel filterModel = new ScheduleFilterModel();
+}
+<style>
+    .btn-add {
+        margin-top: 20px;
+    }
+
+    .text {
+        border: none;
+        background-color: white;
+        color: blue;
+    }
+
+    .flag-container {
+        display: flex;
+        align-items: center;
+        padding: 20px;
+        margin: 20px;
+        overflow: hidden;
+    }
+
+    .flag {
+        flex: 1;
+        max-width: 200px;
+        text-align: center;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .flag-image-container {
+        width: 150px;
+        height: 150px;
+        position: relative;
+        overflow: hidden;
+        border-radius: 50%;
+    }
+
+        .flag-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+    .vs {
+        margin: 0 20px;
+        width: 50px;
+        height: auto;
+    }
+
+    .schedule-container {
+        margin-left: 70px;
+    }
+
+    .schedule {
+        color: rgba(20, 50, 150, 0.8);
+        font-size: 16px;
+    }
+
+    .buttons-container {
+        position: absolute;
+        top: 25px;
+        right: 30px;
+        display: flex;
+        justify-content: space-around;
+        margin-top: 10px;
+    }
+
+    .button {
+        width: 100px;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .filter-container {
+        margin-bottom: 20px;
+    }
+
+        .filter-container input {
+            margin-right: 10px;
+        }
+</style>
+<form method="post" asp-area="Admin" asp-controller="AdminSchedule" asp-action="ScheduleList">
+    <div class="row">
+        <div class="w-25 my-3">
+            <label class="visually-hidden" for="teamFilter">Filter by Team Name</label>
+            <div class="input-group">
+                <div class="input-group-text bg-transparent" style="font-size: 15px"><i class="bi bi-search"></i></div>
+                <select class="form-control" asp-for="@filterModel.Team1ID" asp-items="@(new SelectList(ViewBag.TeamList,"TeamID","TeamName"))">
+                    <option value="">Select Team 1</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="w-25 my-3">
+            <label class="visually-hidden" for="teamFilter">Filter by Team Name</label>
+            <div class="input-group">
+                <div class="input-group-text bg-transparent" style="font-size: 15px"><i class="bi bi-search"></i></div>
+                <select class="form-control" asp-for="@filterModel.Team2ID" asp-items="@(new SelectList(ViewBag.TeamList,"TeamID","TeamName"))">
+                    <option value="">Select Team 2</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="w-25 my-3">
+            <label class="visually-hidden" for="teamFilter">Filter by Team Name</label>
+            <div class="input-group">
+                <div class="input-group-text bg-transparent" style="font-size: 15px"><i class="bi bi-search"></i></div>
+                <select class="form-control" asp-for="@filterModel.VenueID" asp-items="@(new SelectList(ViewBag.VenueList,"VenueID","VenueName"))">
+                    <option value="">Select Venue</option>
+                </select>
+            </div>
+        </div>
+
+        @*<div class="w-25 my-3">
+            <label class="visually-hidden" asp-for="@FilterModel.Venue" for="venueFilter">Filter by Venue</label>
+            <div class="input-group">
+                <div class="input-group-text bg-transparent" style="font-size: 15px"><i class="bi bi-search"></i></div>
+                <input type="text" class="form-control" id="venueFilter" name="Venue" placeholder="Filter by Venue">
+            </div>
+        </div>*@
+
+        <div class="w-auto my-3">
+            <div class="input-group">
+               
+                <input type="submit"  class="btn border border-primary text-primary" id="" value="Apply Filter">
+                
+            </div>
+
+        </div>
+
+        <div class="w-auto my-3">
+            <div class="input-group">
+                <input type="submit"  class="btn border border-secondary text-secondary" id="" value="Clear Filter">
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="table-header d-flex">
+    <div class="add-button ms-auto">
+        <a asp-area="Admin" asp-controller="AdminSchedule" asp-action="ScheduleAddEdit">
+            <button class="btn bg-success text-white py-2"><i class="bi bi-plus-circle me-2"></i>ADD SCHEDULE</button>
+        </a>
+    </div>
+</div>
+
+@foreach (DataRow dr in Model.Rows)
+{
+    <div class="border rounded shadow-sm position-relative">
+        <div class="flag-container">
+            <div class="flag">
+                <h3>@dr["Team1Name"]</h3>
+                <div class="flag-image-container mx-auto">
+                    <img src="@dr["Country1Flag"]" alt="Team 1 Flag">
+                </div>
+            </div>
+
+            <img class="vs" src="https://tse2.mm.bing.net/th?id=OIP.ultQmrL1NiDmbdXBT0UpFwHaGs&pid=Api&P=0&h=180" alt="VS Image">
+
+            <div class="flag">
+                <h3>@dr["Team2Name"]</h3>
+                <div class="flag-image-container mx-auto">
+                    <img src="@dr["Country2Flag"]" alt="Team 2 Flag">
+                </div>
+            </div>
+
+            <div class="buttons-container">
+                <form method="post" asp-area="Admin" asp-controller="AdminSchedule" asp-action="ScheduleAddEdit">
+                    <input type="hidden" name="ScheduleID" value="@dr["ScheduleID"]">
+                    <input type="submit" value="Edit" class="btn border border-primary text-primary me-3 button" />
+                </form>
+                <form method="post" asp-area="Admin" asp-controller="AdminSchedule" asp-action="DeleteSchedule">
+                    <input type="hidden" name="ScheduleID" value="@dr["ScheduleID"]">
+                    <input type="submit" value="Delete" class="btn border border-danger text-danger button" />
+                </form>
+            </div>
+        </div>
+
+        <div class="schedule-container mb-3">
+            <p class="schedule">Schedule Date: @Convert.ToDateTime(@dr["ScheduleDate"]).ToString("d")</p>
+            <p class="schedule">Schedule Time: @dr["Timing"]</p>
+            <p class="schedule">Venue: @dr["VanueName"]</p>
+        </div>
+    </div>
+    <hr />
+}
+
+@section Scripts{
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#teamFilter").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $(".flag-container").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+                });
+            });
+
+            $("#venueFilter").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $(".schedule-container").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+                });
+            });
+        });
+    </script>
+}

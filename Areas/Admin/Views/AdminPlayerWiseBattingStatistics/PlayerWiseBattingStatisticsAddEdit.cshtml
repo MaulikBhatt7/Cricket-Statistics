@@ -1,0 +1,123 @@
+﻿@{
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+@model PlayerWiseBattingStatisticsModel
+
+<div class="container border border-gray rounded p-5 shadow">
+    <h2><i class="bi bi-gear me-2 pb-5" style="font-size: 25px"></i>Player Batting Statistics</h2>
+    <hr />
+
+    <form class="pt-3" method="post" asp-area="Admin" asp-controller="AdminPlayerWiseBattingStatistics" asp-action="InsertUpdateBattingStatistics">
+
+        <div class="col my-4">
+           
+            <input type="hidden" class="form-control" asp-for="BatStatID" />
+        </div>
+
+        <div class="col my-4">
+            <label for="PlayerID">Select Player</label>
+            <select class="form-control" asp-for="PlayerID" asp-items="@(new SelectList(ViewBag.PlayerList, "PlayerID", "PlayerName", Model.PlayerID))">
+                <option value="">Select Player</option>
+            </select>
+            <span asp-validation-for="PlayerID" class="text-danger"></span>
+        </div>
+
+        <div class="col my-4">
+            <label for="FormatID">Select Format</label>
+            <select class="form-control" asp-for="FormatID" asp-items="@(new SelectList(ViewBag.FormatList, "FormatID", "FormatName", Model.FormatID))">
+                <option value="">Select Format</option>
+            </select>
+            <span asp-validation-for="FormatID" class="text-danger"></span>
+        </div>
+
+        <div class="col my-4">
+            <label for="Matches">Matches</label>
+            <input type="text" class="form-control" asp-for="Matches" placeholder="Matches" aria-label="Matches">
+            <span asp-validation-for="Matches" class="text-danger"></span>
+        </div>
+
+        <div class="col my-4">
+            <label for="Innings">Innings</label>
+            <input type="text" class="form-control" asp-for="Innings" placeholder="Innings" aria-label="Innings">
+            <span asp-validation-for="Innings" class="text-danger"></span>
+        </div>
+
+        <div class="col my-4">
+            <label for="NotOuts">Not Outs</label>
+            <input type="text" class="form-control" asp-for="NotOuts" placeholder="Not Outs" aria-label="Not Outs">
+            <span asp-validation-for="NotOuts" class="text-danger"></span>
+        </div>
+
+        <div class="col my-4">
+            <label for="Runs">Runs</label>
+            <input type="text" class="form-control" asp-for="Runs" placeholder="Runs" aria-label="Runs">
+            <span asp-validation-for="Runs" class="text-danger"></span>
+        </div>
+
+        <div class="col my-4">
+            <label for="HighestScore">Highest Score</label>
+            <input type="text" class="form-control" asp-for="HighestScore" placeholder="Highest Score" aria-label="Highest Score">
+            <span asp-validation-for="HighestScore" class="text-danger"></span>
+        </div>
+
+        <div class="col my-4">
+            <label for="BallsFaced">Balls Faced</label>
+            <input type="text" class="form-control" asp-for="BallsFaced" placeholder="Balls Faced" aria-label="Balls Faced">
+            <span asp-validation-for="BallsFaced" class="text-danger"></span>
+        </div>
+
+        <div class="col my-4">
+            <label for="BattingAverage">Batting Average</label>
+            <input type="text" class="form-control" asp-for="BattingAverage" placeholder="Batting Average" aria-label="Batting Average">
+            <span asp-validation-for="BattingAverage" class="text-danger"></span>
+        </div>
+
+        <div class="col my-4">
+            <label for="StrikeRate">Strike Rate</label>
+            <input type="text" class="form-control" asp-for="StrikeRate" placeholder="Strike Rate" aria-label="Strike Rate">
+            <span asp-validation-for="StrikeRate" class="text-danger"></span>
+        </div>
+
+        <div class="col my-4">
+            <label for="Centuries">Centuries</label>
+            <input type="text" class="form-control" asp-for="Centuries" placeholder="Centuries" aria-label="Centuries">
+            <span asp-validation-for="Centuries" class="text-danger"></span>
+        </div>
+
+        <div class="col my-4">
+            <label for="HalfCenturies">Half Centuries</label>
+            <input type="number" class="form-control" asp-for="HalfCenturies" placeholder="Half Centuries" aria-label="Half Centuries">
+            <span asp-validation-for="HalfCenturies" class="text-danger"></span>
+        </div>
+
+        <div class="col my-4">
+            <label for="Fours">Fours</label>
+            <input type="text" class="form-control" asp-for="Fours" placeholder="Fours" aria-label="Fours">
+            <span asp-validation-for="Fours" class="text-danger"></span>
+        </div>
+
+        <div class="col my-4">
+            <label for="Sixes">Sixes</label>
+            <input type="text" class="form-control" asp-for="Sixes" placeholder="Sixes" aria-label="Sixes">
+            <span asp-validation-for="Sixes" class="text-danger"></span>
+        </div>
+
+        <div class="col my-4">
+            <label for="Catches">Catches</label>
+            <input type="text" class="form-control" asp-for="Catches" placeholder="Catches" aria-label="Catches">
+            <span asp-validation-for="Catches" class="text-danger"></span>
+        </div>
+
+        <div class="col my-4">
+            <label for="Stumpings">Stumpings</label>
+            <input type="text" class="form-control" asp-for="Stumpings" placeholder="Stumpings" aria-label="Stumpings">
+            <span asp-validation-for="Stumpings" class="text-danger"></span>
+        </div>
+
+        <div class="col mt-4">
+            <button class="btn btn-primary" type="submit">Submit</button>
+            <a asp-area="Admin" asp-controller="AdminPlayerWiseBattingStatistics" asp-action="BattingStatisticsList" class="btn btn-secondary">Back</a>
+        </div>
+    </form>
+</div>

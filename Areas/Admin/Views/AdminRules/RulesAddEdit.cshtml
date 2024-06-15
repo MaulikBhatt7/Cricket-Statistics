@@ -1,0 +1,41 @@
+﻿@{
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+@model RulesModel
+
+<div class="container border border-gray rounded p-5 shadow">
+
+    <h2><i class="bi bi-gear me-2 pb-5" style="font-size: 25px"></i>Rule Details</h2>
+
+    <hr />
+
+    <form class="pt-3" method="post" asp-area="Admin" asp-controller="AdminRules" asp-action="InsertUpdateRules">
+
+        <div class="col my-4">
+            <input type="text" class="form-control" asp-for="RuleDetails" placeholder="Rule Details" aria-label="Rule Details">
+            <span asp-validation-for="RuleDetails" class="text-danger"></span>
+        </div>
+
+        <div class="col my-4">
+            <select class="form-control" asp-for="FormatID" asp-items="@(new SelectList(ViewBag.FormatList,"FormatID","FormatName"))">
+                <option value="">Select Format</option>
+            </select>
+            <span asp-validation-for="FormatID" class="text-danger"></span>
+        </div>
+
+        <div class="col mt-4">
+
+            <input type="hidden" name="RuleID" id="RuleID" value="@Model.RuleID" />
+
+            <button class="btn btn-primary" type="submit">Submit</button>
+
+            <form asp-area="Admin" asp-controller="AdminRules" asp-action="RuleList">
+                <div class="col mt-4">
+                    <button class="btn btn-secondary" type="submit">Back</button>
+                </div>
+            </form>
+
+        </div>
+    </form>
+</div>

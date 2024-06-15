@@ -1,0 +1,79 @@
+﻿@{
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+@model ScheduleModel
+
+
+<div class="d-flex flex-column">
+    <form method="post" asp-area="Admin" asp-controller="AdminSchedule" asp-action="InsertUpdateSchedule">
+        @Html.HiddenFor(x=>x.ScheduleID)
+        <div class="mt-3 mb-3">
+            <h2>Schedule Add / Edit Page</h2>
+        </div>
+        <div class="mb-3 row form-group">
+            <label class="col-sm-2 col-form-label">Schedule Date</label>
+            <div class="col-xl-4">
+                <input type="date" class="form-control" asp-for="ScheduleDate" />
+                <span asp-validation-for="ScheduleDate" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group mb-3 row">
+            <label class="col-sm-2 control-label col-form-label">Team 1</label>
+            <div class="col-xl-4">
+                <select class="form-control" asp-for="Team1ID" asp-items="@(new SelectList(ViewBag.TeamList,"TeamID","TeamName"))">
+                    <option value="">Select Team 1</option>
+                </select>
+                <span asp-validation-for="Team1ID" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group mb-3 row">
+            <label class="col-sm-2 control-label col-form-label">Team 2</label>
+            <div class="col-xl-4">
+                <select class="form-control" asp-for="Team2ID" asp-items="@(new SelectList(ViewBag.TeamList,"TeamID","TeamName"))">
+                    <option value="">Select Team 2</option>
+                </select>
+                <span asp-validation-for="Team2ID" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group mb-3 row">
+            <label class="col-sm-2 control-label col-form-label">Fromat</label>
+            <div class="col-xl-4">
+                <select class="form-control" asp-for="FormatID" asp-items="@(new SelectList(ViewBag.FormatList,"FormatID","FormatName"))">
+                    <option value="">Select Format</option>
+                </select>
+                <span asp-validation-for="FormatID" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label class="col-sm-2 col-form-label">Timing</label>
+            <div class="col-xl-4">
+                <input type="text" class="form-control" asp-for="Timing" />
+                <span asp-validation-for="Timing" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group mb-3 row">
+            <label class="col-sm-2 control-label col-form-label">Vanue</label>
+            <div class="col-xl-4">
+                <select class="form-control" asp-for="VenueID" asp-items="@(new SelectList(ViewBag.VenueList,"VenueID","VenueName"))">
+                    <option value="">Select Vanue</option>
+                </select>
+                <span asp-validation-for="Team2ID" class="text-danger"></span>
+            </div>
+        </div>
+        
+        <div class="mb-3 row">
+            <label class="col-sm-2 col-form-label">Result</label>
+            <div class="col-xl-4">
+                <input type="text" class="form-control" asp-for="Result" />
+                <span asp-validation-for="Result" class="text-danger"></span>
+            </div>
+        </div>
+       
+        
+        <div class="form-group">
+            <button class="btn btn-success" type="submit">Save</button>
+            <a class="btn btn-primary" asp-area="Admin" asp-controller="AdminSchedule" asp-action="ScheduleList">Back</a>
+        </div>
+    </form>
+</div>
+
